@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: employee
+    ports:
+      - "3307:3306"
+    networks:
+      - mynetwork
+
+  redis:
+    image: redis
+    networks:
+      - mynetwork
+
+  go-app:
+    build:
+      context: .
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql
+      - redis
+
+networks:
+  mynetwork:
+
+
